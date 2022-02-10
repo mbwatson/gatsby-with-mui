@@ -1,55 +1,52 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.com/docs/use-static-query/
- */
+import * as React from 'react'
+import { styled } from '@mui/styles'
+import { Menu } from './menu'
+import { Typography } from '@mui/material'
 
-import * as React from "react"
-import PropTypes from "prop-types"
-import { useStaticQuery, graphql } from "gatsby"
+const Wrapper = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  minHeight: '100vh',
+}))
 
-import Header from "./header"
-import "./layout.css"
+const Header = styled('header')(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.text.primary,
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'stretch',
+  padding: '0 1rem',
+  '& .title': {
+    display: 'flex',
+    alignItems: 'center',
+  }
+}))
 
-const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
+const Main = styled('main')(({ theme }) => ({
+  flex: 1,
+  backgroundColor: '#eee',
+  padding: '1rem',
+}))
 
+const Footer = styled('footer')(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.text.secondary,
+  padding: '1rem',
+  textAlign: 'center',
+}))
+
+export const Layout = ({ children }) => {
   return (
-    <>
-      <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
-        }}
-      >
-        <main>{children}</main>
-        <footer
-          style={{
-            marginTop: `2rem`,
-          }}
-        >
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.com">Gatsby</a>
-        </footer>
-      </div>
-    </>
+    <Wrapper>
+      <Header>
+        <Typography component="span" className="title">Application Name</Typography>
+        <Menu />
+      </Header>
+      <Main>
+        { children }
+      </Main>
+      <Footer>&copy; { new Date().getFullYear() }</Footer>
+    </Wrapper>
   )
 }
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-}
-
-export default Layout

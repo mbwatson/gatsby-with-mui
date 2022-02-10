@@ -1,7 +1,21 @@
-/**
- * Implement Gatsby's Browser APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/browser-apis/
- */
+import * as React from 'react'
+import { ThemeProvider } from '@mui/styles'
+import { theme } from './src/theme'
+import { Layout } from './src/components/layout'
 
-// You can delete this file if you're not using it
+export const wrapRootElement = ({ element, props }) => {
+  return (
+    <ThemeProvider theme={ theme }>
+      { element }
+    </ThemeProvider>
+  )
+}
+
+
+export const wrapPageElement = ({ element, props }) => {
+  return (
+    <Layout>
+      { element }
+    </Layout>
+  )
+}
